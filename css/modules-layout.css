@@ -1,0 +1,29 @@
+/**
+ * recent posts
+ */
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts {}
+
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner {}
+					
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner .recent-posts-list {}
+
+
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner .recent-posts-list .recent-post-single {
+	overflow: hidden;
+	margin-bottom: 15px;
+}
+					
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner .recent-posts-list .recent-post-single .thumbnail {
+	float: left;
+	width: 33.333333333%;
+	margin-right: 15px;
+	max-height: 150px;
+}
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner .recent-posts-list .recent-post-single .thumbnail img {}
+
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner .recent-posts-list .recent-post-single .title {}
+
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner .recent-posts-list .recent-post-single .excerpt {}
+
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_recent_posts .et_pb_recent_posts_inner .recent-posts-list .recent-post-single .excerpt a {}
+

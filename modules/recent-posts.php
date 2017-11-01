@@ -10,6 +10,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			'post_type',
 			//'taxonomy',
 			'number_of_posts',
+			'excerpt_length',
 			'admin_label',
 			'module_id',
 			'module_class',
@@ -18,9 +19,9 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 		$this->fields_defaults = array(
 			'post_type' => array('post'),
 			'number_of_posts'   => array(5),
+			'excerpt_length' => array(30),
 		);
 
-		// EIDT THIS //
 		$this->options_toggles = array(
 			'general'  => array(
 				'toggles' => array(
@@ -67,6 +68,21 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
  					'step' => '1',
  				),
  			),
+			'excerpt_length' => array(
+ 				'label'           => esc_html__('Excerpt Length', 'pickle-divi'),
+ 				'type'            => 'range',
+ 				//'option_category' => 'configuration',
+ 				'description'      => esc_html__('The number of words in the posts excerpt.', 'pickle-divi'),
+ 				'toggle_slug'     => 'main_content',
+ 				//'sub_toggle'      => 'ul',
+ 				//'priority'        => 90,
+ 				'default'         => 30,
+ 				'range_settings'  => array(
+ 					'min'  => '0',
+ 					'max'  => '100',
+ 					'step' => '1',
+ 				),
+ 			),
 			'admin_label' => array(
 				'label'       => esc_html__( 'Admin Label', 'pickle-divi' ),
 				'type'        => 'text',
@@ -99,6 +115,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 		$module_class = $this->shortcode_atts['module_class'];
 		$number_of_posts = $this->shortcode_atts['number_of_posts'];
 		$post_type = $this->shortcode_atts['post_type'];
+		$excerpt_length = $this->shortcode_atts['excerpt_length'];		
 
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
 
@@ -114,7 +131,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			$content.='<ul class="recent-posts-list">';
 			
 				foreach ($post_ids as $post_id) :
-					$excerpt=pickle_divi_excerpt_by_id($post_id, 40, '', '<a href="'.get_permalink($post_id).'">...more &raquo;</a>');
+					$excerpt=pickle_divi_excerpt_by_id($post_id, $excerpt_length, '', '<a href="'.get_permalink($post_id).'">...more &raquo;</a>');
 				
 					if (has_post_thumbnail($post_id)) :
 						$thumbnail=get_the_post_thumbnail($post_id, 'medium');

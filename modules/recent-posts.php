@@ -11,6 +11,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			//'taxonomy',
 			'number_of_posts',
 			'excerpt_length',
+			'show_thumbnail',
 			'admin_label',
 			'module_id',
 			'module_class',
@@ -20,6 +21,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			'post_type' => array('post'),
 			'number_of_posts'   => array(5),
 			'excerpt_length' => array(30),
+			'show_thumbnail' => array( 'on' ),
 		);
 
 		$this->options_toggles = array(
@@ -83,6 +85,17 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
  					'step' => '1',
  				),
  			),
+			'show_thumbnail' => array(
+				'label'             => esc_html__('Show Thumbnail', 'pickle-divi'),
+				'type'              => 'yes_no_button',
+				//'option_category'   => 'configuration',
+				'options'           => array(
+					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
+					'off' => esc_html__( 'No', 'pickle-divi' ),
+				),
+				'toggle_slug'       => 'main_content',
+				'description'       => esc_html__( 'Here you can choose whether or not display the post thumbnail', 'pickle-divi' ),
+			), 			
 			'admin_label' => array(
 				'label'       => esc_html__( 'Admin Label', 'pickle-divi' ),
 				'type'        => 'text',
@@ -115,7 +128,8 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 		$module_class = $this->shortcode_atts['module_class'];
 		$number_of_posts = $this->shortcode_atts['number_of_posts'];
 		$post_type = $this->shortcode_atts['post_type'];
-		$excerpt_length = $this->shortcode_atts['excerpt_length'];		
+		$excerpt_length = $this->shortcode_atts['excerpt_length'];
+		$show_thumbnail = $this->shortcode_atts['show_thumbnail'];		
 
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
 
@@ -142,7 +156,10 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 					
 				
 					$content.='<li id="post-'.$post_id.'" class="recent-post-single">';
-						$content.='<div class="thumbnail">'.$thumbnail.'</div>';
+						
+						if ($show_thumbnail==='on')
+							$content.='<div class="thumbnail">'.$thumbnail.'</div>';
+							
 						$content.='<h3 class="title"><a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a></h3>';
 						
 						if ($excerpt)

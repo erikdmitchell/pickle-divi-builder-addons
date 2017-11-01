@@ -12,6 +12,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			'number_of_posts',
 			'excerpt_length',
 			'show_thumbnail',
+			'more_text',
 			'admin_label',
 			'module_id',
 			'module_class',
@@ -22,12 +23,13 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			'number_of_posts'   => array(5),
 			'excerpt_length' => array(30),
 			'show_thumbnail' => array( 'on' ),
+			'more_text' => array('...more &raquo;'),
 		);
 
 		$this->options_toggles = array(
 			'general'  => array(
 				'toggles' => array(
-					'main_content' => esc_html__('Posts', 'pickle-divi'),
+					'elements' => esc_html__('Posts', 'pickle-divi'),
 				),
 			),
 		);
@@ -52,15 +54,13 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 				),
 */
 				//'taxonomy_name'    => 'project_category',
-				'toggle_slug'      => 'main_content',
+				'toggle_slug'      => 'elements',
 			),
-
-
 			'number_of_posts' => array(
  				'label'           => esc_html__('Number of Posts', 'pickle-divi'),
  				'type'            => 'range',
  				//'option_category' => 'configuration',
- 				'toggle_slug'     => 'main_content',
+ 				'toggle_slug'     => 'elements',
  				//'sub_toggle'      => 'ul',
  				//'priority'        => 90,
  				'default'         => 5,
@@ -75,7 +75,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
  				'type'            => 'range',
  				//'option_category' => 'configuration',
  				'description'      => esc_html__('The number of words in the posts excerpt.', 'pickle-divi'),
- 				'toggle_slug'     => 'main_content',
+ 				'toggle_slug'     => 'elements',
  				//'sub_toggle'      => 'ul',
  				//'priority'        => 90,
  				'default'         => 30,
@@ -93,9 +93,16 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
 					'off' => esc_html__( 'No', 'pickle-divi' ),
 				),
-				'toggle_slug'       => 'main_content',
-				'description'       => esc_html__( 'Here you can choose whether or not display the post thumbnail', 'pickle-divi' ),
-			), 			
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can choose whether or not display the post thumbnail', 'pickle-divi'),
+			), 	
+			'more_text' => array(
+				'label'             => esc_html__('More Text', 'pickle-divi'),
+				'type'              => 'text',
+				//'option_category'   => 'configuration',
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can define the text for the more link. Default is "...more &raquo;"', 'pickle-divi'),
+			),					
 			'admin_label' => array(
 				'label'       => esc_html__( 'Admin Label', 'pickle-divi' ),
 				'type'        => 'text',
@@ -129,7 +136,8 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 		$number_of_posts = $this->shortcode_atts['number_of_posts'];
 		$post_type = $this->shortcode_atts['post_type'];
 		$excerpt_length = $this->shortcode_atts['excerpt_length'];
-		$show_thumbnail = $this->shortcode_atts['show_thumbnail'];		
+		$show_thumbnail = $this->shortcode_atts['show_thumbnail'];
+		$more_text = $this->shortcode_atts['more_text'];		
 
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
 
@@ -145,15 +153,14 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			$content.='<ul class="recent-posts-list">';
 			
 				foreach ($post_ids as $post_id) :
-					$excerpt=pickle_divi_excerpt_by_id($post_id, $excerpt_length, '', '<a href="'.get_permalink($post_id).'">...more &raquo;</a>');
+				
+					$excerpt=pickle_divi_excerpt_by_id($post_id, $excerpt_length, '', '<a href="'.get_permalink($post_id).'">'.$more_text.'</a>');
 				
 					if (has_post_thumbnail($post_id)) :
 						$thumbnail=get_the_post_thumbnail($post_id, 'medium');
 					else :
 						$thumbnail='';
 					endif;
-				
-					
 				
 					$content.='<li id="post-'.$post_id.'" class="recent-post-single">';
 						

@@ -9,13 +9,8 @@ function _pickle_divi_clear_local_storage () {
 }
 add_action('admin_enqueue_scripts', '_pickle_divi_clear_local_storage', 9999);
 
-function pickle_divi_builder_include_post_types_option($args=array()) {
+function pickle_divi_builder_include_post_types_option() {
 	$output='';
-	/*
-		args = Array ( [label] => Post Type [renderer] => boomi_et_builder_include_post_types_option [description] => Select the post type that you would like to include. [toggle_slug] => main_content [shortcode_default] => post [name] => post_type [_order_number] => 0 ) 
-		*/
-	$defaults=array();
-	$args=wp_parse_args($args, $defaults);
 	$post_types=get_post_types(array('public' => true), 'objects');
 
 	$output.='<select name="pickle_divi_pb_include_post_types">';
@@ -27,6 +22,21 @@ function pickle_divi_builder_include_post_types_option($args=array()) {
 	$output='<div id="pickle_divi_pb_include_post_types">'.$output.'</div>';
 
 	return apply_filters('pickle_divi_pb_include_post_types', $output);	
+}
+
+function pickle_divi_builder_get_taxonomies() {
+	$output='';
+	$taxonomies=get_taxonomies(array('public' => true), 'objects');
+	
+	$output.='<select name="pickle_divi_builder_get_taxonomies">';
+		foreach ($taxonomies as $taxonomy) :
+			$output.='<option value="'.$taxonomy->name.'">'.$taxonomy->label.'</option>';
+		endforeach;
+	$output.='</select>';
+
+	$output='<div id="pickle_divi_builder_get_taxonomies">'.$output.'</div>';
+
+	return apply_filters('pickle_divi_builder_get_taxonomies', $output);	
 }
 
 function pickle_divi_excerpt_by_id($post, $length = 10, $tags = '<a><em><strong>', $extra = ' . . .') {

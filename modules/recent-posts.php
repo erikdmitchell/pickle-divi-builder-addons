@@ -8,7 +8,9 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 
 		$this->whitelisted_fields = array(
 			'post_type',
-			//'taxonomy',
+			'in_term',
+			'taxonomy_name',
+			'taxonomy_type',
 			'number_of_posts',
 			'excerpt_length',
 			'show_thumbnail',
@@ -20,6 +22,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 
 		$this->fields_defaults = array(
 			'post_type' => array('post'),
+			'taxonomy_type' => array('category'),
 			'number_of_posts'   => array(5),
 			'excerpt_length' => array(30),
 			'show_thumbnail' => array( 'on' ),
@@ -40,8 +43,6 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 
 	function get_fields() {
 		$fields = array(
-			//'taxonomy',
-			
 			'post_type' => array(
 				'label'            => esc_html__('Post Type', 'pickle-divi'),
 				'renderer'         => 'pickle_divi_builder_include_post_types_option',
@@ -56,6 +57,41 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 				//'taxonomy_name'    => 'project_category',
 				'toggle_slug'      => 'elements',
 			),
+			'in_term' => array(
+				'label'           => esc_html__('In specific category/taxonomy', 'pickle-divi'),
+				'type'            => 'yes_no_button',
+				//'option_category' => 'configuration',
+				'options'         => array(
+					'off' => esc_html__( 'No', 'pickle-divi' ),
+					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
+				),
+				'affects' => array(
+					'taxonomy_type',
+					'taxonomy_name',
+				),
+				'description'      => esc_html__( 'Here you can define whether the posts must be from a specific category/taxonomy', 'pickle-divi' ),
+				'toggle_slug'      => 'elements',
+			),
+			'taxonomy_type' => array(
+				'label'            => esc_html__('Taxonomy Type', 'pickle-divi'),
+				//'type' => 'text',
+				'renderer'         => 'pickle_divi_builder_get_taxonomies',
+				'renderer_with_field' => true,
+				'depends_show_if'  => 'on',
+				'description'      => esc_html__( 'Select the taxonomy type that you would like to include.', 'pickle-divi' ),
+				'toggle_slug'      => 'elements',
+			),
+			'taxonomy_name' => array(
+				'label'            => esc_html__( 'Custom Taxonomy Name', 'pickle-divi' ),
+				'type'             => 'text',
+				//'option_category'  => 'configuration',
+				'depends_show_if'  => 'on',
+				'description'      => esc_html__( 'Type the taxonomy name to make the "In specific category/taxonomy" option work correctly', 'pickle-divi' ),
+				'toggle_slug'      => 'elements',
+				//'computed_affects' => array(
+					//'__posts_navigation',
+				//),
+			),			
 			'number_of_posts' => array(
  				'label'           => esc_html__('Number of Posts', 'pickle-divi'),
  				'type'            => 'range',
@@ -129,24 +165,53 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 
 		return $fields;
 	}
+	
+	function get_post_ids($args=array()) {
+		$defaults=array(
+			'posts_per_page' => 5,
+			'post_type' => 'post',
+			'fields' => 'ids',
+		);
+
+		$args = wp_parse_args($args, $defaults);
+
+		$post_ids=get_posts($args);
+		
+		return $post_ids;		
+	}
 
 	function shortcode_callback( $atts, $content = null, $function_name ) {
+		$content='';
+		
 		$module_id = $this->shortcode_atts['module_id'];
 		$module_class = $this->shortcode_atts['module_class'];
 		$number_of_posts = $this->shortcode_atts['number_of_posts'];
 		$post_type = $this->shortcode_atts['post_type'];
+		$in_term = $this->shortcode_atts['in_term'];
+		$taxonomy_type = $this->shortcode_atts['taxonomy_type'];
+		$taxonomy_name = $this->shortcode_atts['taxonomy_name'];		
 		$excerpt_length = $this->shortcode_atts['excerpt_length'];
 		$show_thumbnail = $this->shortcode_atts['show_thumbnail'];
 		$more_text = $this->shortcode_atts['more_text'];		
 
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
-
-		$content='';
-		$post_ids=get_posts(array(
+		
+		$post_id_args=array(
 			'posts_per_page' => $number_of_posts,
-			'post_type' => $post_type,
-			'fields' => 'ids',
-		));
+			'post_type' => $post_type,	
+		);
+
+		if ($in_term==='on') :
+			$post_id_args['tax_query']=array(
+				array(
+					'taxonomy' => $taxonomy_type,
+					'field' => 'name',
+					'terms' => $taxonomy_name
+				)
+			);			
+		endif;
+
+		$post_ids=$this->get_post_ids($post_id_args);
 		
 		if (count($post_ids)) :
 		

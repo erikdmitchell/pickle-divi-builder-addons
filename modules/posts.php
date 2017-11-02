@@ -16,6 +16,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'show_thumbnail',
 			'show_date',
 			'date_format',
+			'show_more_link',
 			'more_text',
 			'admin_label',
 			'module_id',
@@ -30,6 +31,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'show_thumbnail' => array('on'),
 			'show_date' => array('off'),
 			'date_format' => array('M j, Y'),
+			'show_more_link' => array('on'),
 			'more_text' => array('...more &raquo;'),
 		);
 
@@ -49,7 +51,8 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		$fields = array(
 			'post_type' => array(
 				'label'            => esc_html__('Post Type', 'pickle-divi'),
-				'renderer'         => 'pickle_divi_builder_include_post_types_option',
+				'type' => 'select',
+				'options' => pickle_divi_builder_include_post_types_option(),
 				'option_category'  => 'configuration',
 				'description'      => esc_html__( 'Select the post type that you would like to include.', 'pickle-divi' ),
 				'toggle_slug'      => 'elements',
@@ -143,12 +146,28 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 				'depends_show_if'  => 'on',
 				'description'      => esc_html__('Here you can define the format for the date. Default is "M j, Y"', 'pickle-divi' ),
 				'toggle_slug'      => 'elements',
-			),			
+			),
+			'show_more_link' => array(
+				'label'             => esc_html__('Show More Link', 'pickle-divi'),
+				'type'              => 'yes_no_button',
+				'option_category'   => 'configuration',
+				'options'           => array(
+					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
+					'off' => esc_html__( 'No', 'pickle-divi' ),
+				),
+				'default' => 'on',
+				'affects' => array(
+					'more_text',
+				),				
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can choose whether or not display to display the more link', 'pickle-divi'),
+			), 						
 			'more_text' => array(
 				'label'             => esc_html__('More Text', 'pickle-divi'),
 				'type'              => 'text',
 				'option_category'   => 'configuration',
 				'toggle_slug'       => 'elements',
+				'depends_show_if'  => 'on',
 				'description'       => esc_html__('Here you can define the text for the more link. Default is "...more &raquo;"', 'pickle-divi'),
 			),					
 			'admin_label' => array(
@@ -204,6 +223,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		$taxonomy_name = $this->shortcode_atts['taxonomy_name'];		
 		$excerpt_length = $this->shortcode_atts['excerpt_length'];
 		$show_thumbnail = $this->shortcode_atts['show_thumbnail'];
+		$show_more_link = $this->shortcode_atts['show_more_link'];
 		$more_text = $this->shortcode_atts['more_text'];		
 
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
@@ -230,8 +250,13 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			$content.='<ul class="recent-posts-list">';
 			
 				foreach ($post_ids as $post_id) :
+					if ($show_more_link==='on') :
+						$more='<a href="'.get_permalink($post_id).'">'.$more_text.'</a>';
+					else :
+						$more='';
+					endif;
 				
-					$excerpt=pickle_divi_excerpt_by_id($post_id, $excerpt_length, '', '<a href="'.get_permalink($post_id).'">'.$more_text.'</a>');
+					$excerpt=pickle_divi_excerpt_by_id($post_id, $excerpt_length, '', $more);
 				
 					if (has_post_thumbnail($post_id)) :
 						$thumbnail=get_the_post_thumbnail($post_id, 'medium');

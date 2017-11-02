@@ -50,7 +50,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'post_type' => array(
 				'label'            => esc_html__('Post Type', 'pickle-divi'),
 				'renderer'         => 'pickle_divi_builder_include_post_types_option',
-				//'option_category'  => 'basic_option',
+				'option_category'  => 'configuration',
 				'description'      => esc_html__( 'Select the post type that you would like to include.', 'pickle-divi' ),
 /*
 				'computed_affects' => array(
@@ -64,7 +64,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'in_term' => array(
 				'label'           => esc_html__('In specific category/taxonomy', 'pickle-divi'),
 				'type'            => 'yes_no_button',
-				//'option_category' => 'configuration',
+				'option_category' => 'configuration',
 				'options'         => array(
 					'off' => esc_html__( 'No', 'pickle-divi' ),
 					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
@@ -88,7 +88,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'taxonomy_name' => array(
 				'label'            => esc_html__( 'Custom Taxonomy Name', 'pickle-divi' ),
 				'type'             => 'text',
-				//'option_category'  => 'configuration',
 				'depends_show_if'  => 'on',
 				'description'      => esc_html__( 'Type the taxonomy name to make the "In specific category/taxonomy" option work correctly', 'pickle-divi' ),
 				'toggle_slug'      => 'elements',
@@ -99,7 +98,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'number_of_posts' => array(
  				'label'           => esc_html__('Number of Posts', 'pickle-divi'),
  				'type'            => 'range',
- 				//'option_category' => 'configuration',
+ 				'option_category' => 'configuration',
  				'toggle_slug'     => 'elements',
  				//'sub_toggle'      => 'ul',
  				//'priority'        => 90,
@@ -113,7 +112,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'excerpt_length' => array(
  				'label'           => esc_html__('Excerpt Length', 'pickle-divi'),
  				'type'            => 'range',
- 				//'option_category' => 'configuration',
+ 				'option_category' => 'configuration',
  				'description'      => esc_html__('The number of words in the posts excerpt.', 'pickle-divi'),
  				'toggle_slug'     => 'elements',
  				//'sub_toggle'      => 'ul',
@@ -128,7 +127,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'show_thumbnail' => array(
 				'label'             => esc_html__('Show Featured Image', 'pickle-divi'),
 				'type'              => 'yes_no_button',
-				//'option_category'   => 'configuration',
+				'option_category'   => 'configuration',
 				'options'           => array(
 					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
 					'off' => esc_html__( 'No', 'pickle-divi' ),
@@ -140,7 +139,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'show_date' => array(
 				'label'             => esc_html__('Show Date', 'pickle-divi'),
 				'type'              => 'yes_no_button',
-				//'option_category'   => 'configuration',
+				'option_category'   => 'configuration',
 				'options'           => array(
 					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
 					'off' => esc_html__( 'No', 'pickle-divi' ),
@@ -155,7 +154,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'date_format' => array(
 				'label'            => esc_html__( 'Date Format', 'pickle-divi' ),
 				'type'             => 'text',
-				//'option_category'  => 'configuration',
 				'depends_show_if'  => 'on',
 				'description'      => esc_html__('Here you can define the format for the date. Default is "M j, Y"', 'pickle-divi' ),
 				'toggle_slug'      => 'elements',
@@ -166,7 +164,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'more_text' => array(
 				'label'             => esc_html__('More Text', 'pickle-divi'),
 				'type'              => 'text',
-				//'option_category'   => 'configuration',
+				'option_category'   => 'configuration',
 				'toggle_slug'       => 'elements',
 				'description'       => esc_html__('Here you can define the text for the more link. Default is "...more &raquo;"', 'pickle-divi'),
 			),					

@@ -7,6 +7,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		//$this->fb_support = true; // CHECK THIS //
 
 		$this->whitelisted_fields = array(
+			'section_title',
 			'post_type',
 			'in_term',
 			'taxonomy_name',
@@ -51,6 +52,12 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 
 	function get_fields() {
 		$fields = array(
+			'section_title' => array(
+				'label'            => esc_html__( 'Section Title', 'pickle-divi' ),
+				'type'             => 'text',
+				'description'      => esc_html__( 'This will appear above the posts. If left empty, nothing will appear.', 'pickle-divi' ),
+				'toggle_slug'      => 'elements',
+			),			
 			'post_type' => array(
 				'label'            => esc_html__('Post Type', 'pickle-divi'),
 				'type' => 'select',
@@ -234,6 +241,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		
 		$module_id = $this->shortcode_atts['module_id'];
 		$module_class = $this->shortcode_atts['module_class'];
+		$section_title = $this->shortcode_atts['section_title'];
 		$number_of_posts = $this->shortcode_atts['number_of_posts'];
 		$post_type = $this->shortcode_atts['post_type'];
 		$in_term = $this->shortcode_atts['in_term'];
@@ -267,6 +275,9 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		$post_ids=$this->get_post_ids($post_id_args);
 		
 		if (count($post_ids)) :
+		
+			if (!empty($section_title))
+				$content.='<h3 class="posts-section-title">'.$section_title.'</h3>';
 		
 			$content.='<ul class="recent-posts-list">';
 			

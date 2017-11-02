@@ -10,16 +10,12 @@ function _pickle_divi_clear_local_storage () {
 add_action('admin_enqueue_scripts', '_pickle_divi_clear_local_storage', 9999);
 
 function pickle_divi_builder_include_post_types_option() {
-	$output='';
+	$output=array();
 	$post_types=get_post_types(array('public' => true), 'objects');
 
-	$output.='<select name="pickle_divi_pb_include_post_types">';
-		foreach ($post_types as $post_type) :
-			$output.='<option value="'.$post_type->name.'">'.$post_type->label.'</option>';
-		endforeach;
-	$output.='</select>';
-
-	$output='<div id="pickle_divi_pb_include_post_types">'.$output.'</div>';
+	foreach ($post_types as $post_type) :
+		$output[$post_type->name]=$post_type->label;
+	endforeach;
 
 	return apply_filters('pickle_divi_pb_include_post_types', $output);	
 }

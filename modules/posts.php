@@ -1,9 +1,9 @@
 <?php
 
-class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
+class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 	function init() {
-		$this->name       = esc_html__( 'Recent Posts', 'pickle-divi' );
-		$this->slug       = 'et_pb_recent_posts';
+		$this->name       = esc_html__( 'Posts', 'pickle-divi' );
+		$this->slug       = 'et_pb_posts';
 		//$this->fb_support = true; // CHECK THIS //
 
 		$this->whitelisted_fields = array(
@@ -14,6 +14,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			'number_of_posts',
 			'excerpt_length',
 			'show_thumbnail',
+			'show_date',
 			'more_text',
 			'admin_label',
 			'module_id',
@@ -25,7 +26,8 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 			'taxonomy_type' => array('category'),
 			'number_of_posts'   => array(5),
 			'excerpt_length' => array(30),
-			'show_thumbnail' => array( 'on' ),
+			'show_thumbnail' => array('on'),
+			'show_date' => array('off'),
 			'more_text' => array('...more &raquo;'),
 		);
 
@@ -101,7 +103,7 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
  				//'priority'        => 90,
  				'default'         => 5,
  				'range_settings'  => array(
- 					'min'  => '0',
+ 					'min'  => '-1',
  					'max'  => '100',
  					'step' => '1',
  				),
@@ -122,16 +124,29 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
  				),
  			),
 			'show_thumbnail' => array(
-				'label'             => esc_html__('Show Thumbnail', 'pickle-divi'),
+				'label'             => esc_html__('Show Featured Image', 'pickle-divi'),
 				'type'              => 'yes_no_button',
 				//'option_category'   => 'configuration',
 				'options'           => array(
 					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
 					'off' => esc_html__( 'No', 'pickle-divi' ),
 				),
+				'default' => 'on',
 				'toggle_slug'       => 'elements',
-				'description'       => esc_html__('Here you can choose whether or not display the post thumbnail', 'pickle-divi'),
+				'description'       => esc_html__('Here you can choose whether or not display the post featured image', 'pickle-divi'),
 			), 	
+			'show_date' => array(
+				'label'             => esc_html__('Show Date', 'pickle-divi'),
+				'type'              => 'yes_no_button',
+				//'option_category'   => 'configuration',
+				'options'           => array(
+					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
+					'off' => esc_html__( 'No', 'pickle-divi' ),
+				),
+				'default' => 'off',
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can choose whether or not display to display the date after the post title', 'pickle-divi'),
+			), 
 			'more_text' => array(
 				'label'             => esc_html__('More Text', 'pickle-divi'),
 				'type'              => 'text',
@@ -246,8 +261,8 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 		endif;
 
 		$output = sprintf(
-			'<div%2$s class="et_pb_recent_posts%3$s">
-				<div class="et_pb_recent_posts_inner">
+			'<div%2$s class="et_pb_posts%3$s">
+				<div class="et_pb_posts_inner">
 					%1$s
 				</div>
 			</div> <!-- .et_pb_text -->',
@@ -260,5 +275,5 @@ class Pickle_Divi_Builder_Module_Recent_Posts extends ET_Builder_Module {
 	}
 }
 
-new Pickle_Divi_Builder_Module_Recent_Posts;
+new Pickle_Divi_Builder_Module_Posts;
 ?>

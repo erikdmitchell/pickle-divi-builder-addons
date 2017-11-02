@@ -74,7 +74,7 @@ final class PickleDivi {
 		include_once(PICKLE_DIVI_PATH.'modules/functions.php');
 		
 		if (class_exists('ET_Builder_Module')) :
-			include_once(PICKLE_DIVI_PATH.'modules/recent-posts.php');	    
+			include_once(PICKLE_DIVI_PATH.'modules/posts.php');	    
 		endif;
 	}
 

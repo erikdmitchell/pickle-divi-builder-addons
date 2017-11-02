@@ -71,7 +71,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			),
 			'taxonomy_type' => array(
 				'label'            => esc_html__('Taxonomy Type', 'pickle-divi'),
-				//'type' => 'text',
+				'type' => 'hidden',
 				'renderer'         => 'pickle_divi_builder_get_taxonomies',
 				'renderer_with_field' => true,
 				'depends_show_if'  => 'on',

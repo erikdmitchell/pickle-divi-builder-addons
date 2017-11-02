@@ -15,6 +15,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'excerpt_length',
 			'show_thumbnail',
 			'show_date',
+			'date_format',
 			'more_text',
 			'admin_label',
 			'module_id',
@@ -28,6 +29,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'excerpt_length' => array(30),
 			'show_thumbnail' => array('on'),
 			'show_date' => array('off'),
+			'date_format' => array('M j, Y'),
 			'more_text' => array('...more &raquo;'),
 		);
 
@@ -144,9 +146,23 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 					'off' => esc_html__( 'No', 'pickle-divi' ),
 				),
 				'default' => 'off',
+				'affects' => array(
+					'date_format',
+				),				
 				'toggle_slug'       => 'elements',
 				'description'       => esc_html__('Here you can choose whether or not display to display the date after the post title', 'pickle-divi'),
 			), 
+			'date_format' => array(
+				'label'            => esc_html__( 'Date Format', 'pickle-divi' ),
+				'type'             => 'text',
+				//'option_category'  => 'configuration',
+				'depends_show_if'  => 'on',
+				'description'      => esc_html__('Here you can define the format for the date. Default is "M j, Y"', 'pickle-divi' ),
+				'toggle_slug'      => 'elements',
+				//'computed_affects' => array(
+					//'__posts_navigation',
+				//),
+			),			
 			'more_text' => array(
 				'label'             => esc_html__('More Text', 'pickle-divi'),
 				'type'              => 'text',

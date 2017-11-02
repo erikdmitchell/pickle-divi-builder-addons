@@ -12,6 +12,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'taxonomy_name',
 			'taxonomy_type',
 			'number_of_posts',
+			'show_excerpt',
 			'excerpt_length',
 			'show_thumbnail',
 			'show_date',
@@ -27,6 +28,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'post_type' => array('post'),
 			'taxonomy_type' => array('category'),
 			'number_of_posts'   => array(5),
+			'show_excerpt' => array('on'),
 			'excerpt_length' => array(30),
 			'show_thumbnail' => array('on'),
 			'show_date' => array('off'),
@@ -100,10 +102,26 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
  					'step' => '1',
  				),
  			),
+			'show_excerpt' => array(
+				'label'             => esc_html__('Show Excerpt', 'pickle-divi'),
+				'type'              => 'yes_no_button',
+				'option_category'   => 'configuration',
+				'options'           => array(
+					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
+					'off' => esc_html__( 'No', 'pickle-divi' ),
+				),
+				'default' => 'on',
+				'affects' => array(
+					'excerpt_length',
+				),				
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can choose whether or not display to display the excerpt/post content', 'pickle-divi'),
+			),  			
 			'excerpt_length' => array(
  				'label'           => esc_html__('Excerpt Length', 'pickle-divi'),
  				'type'            => 'range',
  				'option_category' => 'configuration',
+ 				'depends_show_if'  => 'on',
  				'description'      => esc_html__('The number of words in the posts excerpt.', 'pickle-divi'),
  				'toggle_slug'     => 'elements',
  				'default'         => 30,
@@ -220,7 +238,8 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		$post_type = $this->shortcode_atts['post_type'];
 		$in_term = $this->shortcode_atts['in_term'];
 		$taxonomy_type = $this->shortcode_atts['taxonomy_type'];
-		$taxonomy_name = $this->shortcode_atts['taxonomy_name'];		
+		$taxonomy_name = $this->shortcode_atts['taxonomy_name'];
+		$show_excerpt = $this->shortcode_atts['show_excerpt'];
 		$excerpt_length = $this->shortcode_atts['excerpt_length'];
 		$show_thumbnail = $this->shortcode_atts['show_thumbnail'];
 		$show_date = $this->shortcode_atts['show_date'];
@@ -276,7 +295,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 						if ($show_date==='on')
 							$content.='<div class="date">'.get_the_date($date_format, $post_id).'</div>';						
 						
-						if ($excerpt)
+						if ($show_excerpt==='on' && $excerpt)
 							$content.='<div class="excerpt">'.$excerpt.'</div>';
 							
 					$content.='</li>';

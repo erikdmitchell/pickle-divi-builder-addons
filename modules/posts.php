@@ -223,6 +223,8 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		$taxonomy_name = $this->shortcode_atts['taxonomy_name'];		
 		$excerpt_length = $this->shortcode_atts['excerpt_length'];
 		$show_thumbnail = $this->shortcode_atts['show_thumbnail'];
+		$show_date = $this->shortcode_atts['show_date'];
+		$date_format = $this->shortcode_atts['date_format'];		
 		$show_more_link = $this->shortcode_atts['show_more_link'];
 		$more_text = $this->shortcode_atts['more_text'];		
 
@@ -270,6 +272,9 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 							$content.='<div class="thumbnail">'.$thumbnail.'</div>';
 							
 						$content.='<h3 class="title"><a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a></h3>';
+						
+						if ($show_date==='on')
+							$content.='<div class="date">'.get_the_date($date_format, $post_id).'</div>';						
 						
 						if ($excerpt)
 							$content.='<div class="excerpt">'.$excerpt.'</div>';

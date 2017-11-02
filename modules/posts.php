@@ -52,13 +52,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 				'renderer'         => 'pickle_divi_builder_include_post_types_option',
 				'option_category'  => 'configuration',
 				'description'      => esc_html__( 'Select the post type that you would like to include.', 'pickle-divi' ),
-/*
-				'computed_affects' => array(
-					'__project_terms',
-					'__projects',
-				),
-*/
-				//'taxonomy_name'    => 'project_category',
 				'toggle_slug'      => 'elements',
 			),
 			'in_term' => array(
@@ -91,9 +84,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 				'depends_show_if'  => 'on',
 				'description'      => esc_html__( 'Type the taxonomy name to make the "In specific category/taxonomy" option work correctly', 'pickle-divi' ),
 				'toggle_slug'      => 'elements',
-				//'computed_affects' => array(
-					//'__posts_navigation',
-				//),
 			),			
 			'number_of_posts' => array(
  				'label'           => esc_html__('Number of Posts', 'pickle-divi'),
@@ -157,9 +147,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 				'depends_show_if'  => 'on',
 				'description'      => esc_html__('Here you can define the format for the date. Default is "M j, Y"', 'pickle-divi' ),
 				'toggle_slug'      => 'elements',
-				//'computed_affects' => array(
-					//'__posts_navigation',
-				//),
 			),			
 			'more_text' => array(
 				'label'             => esc_html__('More Text', 'pickle-divi'),

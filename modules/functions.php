@@ -21,16 +21,12 @@ function pickle_divi_builder_include_post_types_option() {
 }
 
 function pickle_divi_builder_get_taxonomies() {
-	$output='';
+	$output=array();
 	$taxonomies=get_taxonomies(array('public' => true), 'objects');
-	
-	$output.='<select name="pickle_divi_builder_get_taxonomies">';
-		foreach ($taxonomies as $taxonomy) :
-			$output.='<option value="'.$taxonomy->name.'">'.$taxonomy->label.'</option>';
-		endforeach;
-	$output.='</select>';
 
-	$output='<div id="pickle_divi_builder_get_taxonomies">'.$output.'</div>';
+	foreach ($taxonomies as $taxonomy) :
+		$output[$taxonomy->name]=$taxonomy->label;
+	endforeach;
 
 	return apply_filters('pickle_divi_builder_get_taxonomies', $output);	
 }

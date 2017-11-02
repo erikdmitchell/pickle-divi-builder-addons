@@ -83,9 +83,11 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			),
 			'taxonomy_type' => array(
 				'label'            => esc_html__('Taxonomy Type', 'pickle-divi'),
-				'type' => 'hidden',
-				'renderer'         => 'pickle_divi_builder_get_taxonomies',
-				'renderer_with_field' => true,
+				//'type' => 'hidden',
+				'type' => 'select',
+				//'renderer'         => 'pickle_divi_builder_get_taxonomies',
+				//'renderer_with_field' => true,
+				'options' => pickle_divi_builder_get_taxonomies(),
 				'depends_show_if'  => 'on',
 				'description'      => esc_html__( 'Select the taxonomy type that you would like to include.', 'pickle-divi' ),
 				'toggle_slug'      => 'elements',
@@ -230,7 +232,9 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		);
 
 		$args = wp_parse_args($args, $defaults);
-
+echo '<pre>';
+print_r($args);
+echo '</pre>';
 		$post_ids=get_posts($args);
 		
 		return $post_ids;		

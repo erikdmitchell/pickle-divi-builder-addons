@@ -90,8 +90,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
  				'type'            => 'range',
  				'option_category' => 'configuration',
  				'toggle_slug'     => 'elements',
- 				//'sub_toggle'      => 'ul',
- 				//'priority'        => 90,
  				'default'         => 5,
  				'range_settings'  => array(
  					'min'  => '-1',
@@ -105,8 +103,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
  				'option_category' => 'configuration',
  				'description'      => esc_html__('The number of words in the posts excerpt.', 'pickle-divi'),
  				'toggle_slug'     => 'elements',
- 				//'sub_toggle'      => 'ul',
- 				//'priority'        => 90,
  				'default'         => 30,
  				'range_settings'  => array(
  					'min'  => '0',

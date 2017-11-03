@@ -20,6 +20,8 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'date_format',
 			'show_more_link',
 			'more_text',
+			'order',
+			'order_by',
 			'admin_label',
 			'module_id',
 			'module_class',
@@ -36,6 +38,8 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'date_format' => array('M j, Y'),
 			'show_more_link' => array('on'),
 			'more_text' => array('...more &raquo;'),
+			'order' => array('DESC'),
+			'order_by' => array('date'),						
 		);
 
 		$this->options_toggles = array(
@@ -196,7 +200,41 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 				'toggle_slug'       => 'elements',
 				'depends_show_if'  => 'on',
 				'description'       => esc_html__('Here you can define the text for the more link. Default is "...more &raquo;"', 'pickle-divi'),
-			),					
+			),
+			'order' => array(
+				'label'             => esc_html__('Order', 'pickle-divi'),
+				'type'              => 'select',
+				'option_category'   => 'configuration',
+				'options'           => array(
+					'ASC'  => esc_html__( 'ASC', 'pickle-divi' ),
+					'DESC' => esc_html__( 'DESC', 'pickle-divi' ),
+				),
+				'default' => 'DESC',			
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can change the order of the posts', 'pickle-divi'),
+			),  
+			'order_by' => array(
+				'label'             => esc_html__('Order By', 'pickle-divi'),
+				'type'              => 'select',
+				'option_category'   => 'configuration',
+				'options'           => array(
+					'none'  => esc_html__( 'None', 'pickle-divi' ),
+					'ID' => esc_html__('ID', 'pickle-divi'),
+					'author' => esc_html__('Author', 'pickle-divi'),
+					'title' => esc_html__('Title', 'pickle-divi'),
+					'date' => esc_html__('Date', 'pickle-divi'),
+					'modified' => esc_html__('Last Modified', 'pickle-divi'),
+					'parent' => esc_html__('Parent ID', 'pickle-divi'),
+					'rand' => esc_html__('Random', 'pickle-divi'),
+					'comment_count' => esc_html__('Number of Comments', 'pickle-divi'),
+					'menu_order' => esc_html__('Page Order', 'pickle-divi'),
+					'meta_value' => esc_html__('Meta Value', 'pickle-divi'),
+					'meta_value_num' => esc_html__('Numeric Meta Value', 'pickle-divi'),
+				),
+				'default' => 'date',				
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can change how to order the posts', 'pickle-divi'),
+			),  											
 			'admin_label' => array(
 				'label'       => esc_html__( 'Admin Label', 'pickle-divi' ),
 				'type'        => 'text',
@@ -257,13 +295,17 @@ echo '</pre>';
 		$show_date = $this->shortcode_atts['show_date'];
 		$date_format = $this->shortcode_atts['date_format'];		
 		$show_more_link = $this->shortcode_atts['show_more_link'];
-		$more_text = $this->shortcode_atts['more_text'];		
-
+		$more_text = $this->shortcode_atts['more_text'];	
+		$order = $this->shortcode_atts['order'];
+		$order_by = $this->shortcode_atts['order_by'];
+				
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
 		
 		$post_id_args=array(
 			'posts_per_page' => $number_of_posts,
-			'post_type' => $post_type,	
+			'post_type' => $post_type,
+			'order' => $order,
+			'orderby' => $order_by,
 		);
 
 		if ($in_term==='on') :

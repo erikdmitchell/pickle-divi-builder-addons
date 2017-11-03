@@ -393,7 +393,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 						$content.='<h3 class="title"><a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a></h3>';
 						
 						if ($show_date==='on')
-							$content.='<div class="date">'.get_the_date($date_format, $post_id).'</div>'; // FILTER						
+							$content.='<div class="date">'.apply_filters('pickle_divi_posts_module_date', get_the_date($date_format, $post_id), $post_id, $date_format).'</div>';						
 						
 						if ($show_excerpt==='on' && $excerpt)
 							$content.='<div class="excerpt">'.$excerpt.'</div>';

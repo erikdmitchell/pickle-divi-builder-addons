@@ -307,15 +307,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'fields' => 'ids',
 		);
 		$args=wp_parse_args($args, $defaults);
-		$args=apply_filters('pickle_divi_posts_module_get_post_ids_args_'.$this->slug, $args, $this->shortcode_atts);
-
-echo '<pre>';
-print_r($args);
-echo '</pre>';
-
-
-
-
+		$args=apply_filters('pickle_divi_posts_module_get_post_ids_args', $args, $this);
 
 		$post_ids=get_posts($args);
 
@@ -366,7 +358,7 @@ echo '</pre>';
 		endif;
 		
 		if ($show_custom_meta_query==='on') :
-			$post_id_args=apply_filters('pickle_divi_posts_module_custom_meta_query_'.$this->slug, $post_id_args, $this->shortcode_atts);
+			$post_id_args=apply_filters('pickle_divi_posts_module_custom_meta_query', $post_id_args, $this->shortcode_atts);
 		endif;
 
 		$post_ids=$this->get_post_ids($post_id_args);
@@ -385,7 +377,7 @@ echo '</pre>';
 						$more='';
 					endif;
 				
-					$excerpt=pickle_divi_excerpt_by_id($post_id, $excerpt_length, '', $more);
+					$excerpt=apply_filters('pickle_divi_posts_module_excerpt', pickle_divi_excerpt_by_id($post_id, $excerpt_length, '', $more), $post_id, $excerpt_length, $more, $this);
 				
 					if (has_post_thumbnail($post_id)) :
 						$thumbnail=get_the_post_thumbnail($post_id, 'medium');
@@ -401,7 +393,7 @@ echo '</pre>';
 						$content.='<h3 class="title"><a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a></h3>';
 						
 						if ($show_date==='on')
-							$content.='<div class="date">'.get_the_date($date_format, $post_id).'</div>';						
+							$content.='<div class="date">'.get_the_date($date_format, $post_id).'</div>'; // FILTER						
 						
 						if ($show_excerpt==='on' && $excerpt)
 							$content.='<div class="excerpt">'.$excerpt.'</div>';

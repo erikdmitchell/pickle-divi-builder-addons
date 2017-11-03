@@ -53,7 +53,7 @@ final class PickleDivi {
 	}
 
 	public function includes() {
-
+		include_once(PICKLE_DIVI_PATH.'functions.php');
 	}
 
 	private function init_hooks() {
@@ -71,8 +71,6 @@ final class PickleDivi {
 	}
 
 	public function load_modules() {
-		include_once(PICKLE_DIVI_PATH.'modules/functions.php');
-		
 		if (class_exists('ET_Builder_Module')) :
 			include_once(PICKLE_DIVI_PATH.'modules/posts.php');	    
 		endif;

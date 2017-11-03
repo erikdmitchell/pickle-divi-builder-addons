@@ -22,6 +22,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'more_text',
 			'order',
 			'order_by',
+			'meta_key',
 			'admin_label',
 			'module_id',
 			'module_class',
@@ -39,7 +40,8 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'show_more_link' => array('on'),
 			'more_text' => array('...more &raquo;'),
 			'order' => array('DESC'),
-			'order_by' => array('date'),						
+			'order_by' => array('date'),	
+			'meta_key' => array(''),					
 		);
 
 		$this->options_toggles = array(
@@ -231,10 +233,31 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 					'meta_value' => esc_html__('Meta Value', 'pickle-divi'),
 					'meta_value_num' => esc_html__('Numeric Meta Value', 'pickle-divi'),
 				),
-				'default' => 'date',				
+				'default' => 'date',	
+				'affects' => array(
+					'meta_key',
+				),							
 				'toggle_slug'       => 'elements',
 				'description'       => esc_html__('Here you can change how to order the posts', 'pickle-divi'),
-			),  											
+			),  
+			'meta_key' => array(
+				'label'            => esc_html__( 'Meta Key', 'pickle-divi' ),
+				'type'             => 'text',
+				'description'      => esc_html__( 'The key to order the posts by (meta value).', 'pickle-divi' ),
+				'toggle_slug'      => 'elements',
+				'depends_show_if_not'  => array(
+					'none',
+					'ID',
+					'author',
+					'title',
+					'date',
+					'modified',
+					'parent',
+					'rand',
+					'comment_count',
+					'menu_order',
+				),
+			),															
 			'admin_label' => array(
 				'label'       => esc_html__( 'Admin Label', 'pickle-divi' ),
 				'type'        => 'text',
@@ -270,9 +293,11 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 		);
 
 		$args = wp_parse_args($args, $defaults);
+/*
 echo '<pre>';
 print_r($args);
 echo '</pre>';
+*/
 		$post_ids=get_posts($args);
 		
 		return $post_ids;		
@@ -298,6 +323,7 @@ echo '</pre>';
 		$more_text = $this->shortcode_atts['more_text'];	
 		$order = $this->shortcode_atts['order'];
 		$order_by = $this->shortcode_atts['order_by'];
+		$meta_key = $this->shortcode_atts['meta_key'];
 				
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
 		
@@ -306,6 +332,7 @@ echo '</pre>';
 			'post_type' => $post_type,
 			'order' => $order,
 			'orderby' => $order_by,
+			'meta_key' => $meta_key,
 		);
 
 		if ($in_term==='on') :

@@ -23,6 +23,8 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'order',
 			'order_by',
 			'meta_key',
+			'show_custom_meta_query',
+			'custom_meta_query',			
 			'admin_label',
 			'module_id',
 			'module_class',
@@ -41,7 +43,9 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'more_text' => array('...more &raquo;'),
 			'order' => array('DESC'),
 			'order_by' => array('date'),	
-			'meta_key' => array(''),					
+			'meta_key' => array(''),	
+			'show_custom_meta_query' => array('off'),
+			'custom_meta_query' => array(''),				
 		);
 
 		$this->options_toggles = array(
@@ -257,7 +261,30 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 					'comment_count',
 					'menu_order',
 				),
-			),															
+			),
+			'show_custom_meta_query' => array(
+				'label'             => esc_html__('Add Custom Meta Query', 'pickle-divi'),
+				'type'              => 'yes_no_button',
+				'option_category'   => 'configuration',
+				'options'           => array(
+					'on'  => esc_html__( 'Yes', 'pickle-divi' ),
+					'off' => esc_html__( 'No', 'pickle-divi' ),
+				),
+				'default' => 'off',
+				'affects' => array(
+					'custom_meta_query',
+				),				
+				'toggle_slug'       => 'elements',
+				'description'       => esc_html__('Here you can choose whether or not to add a custom meta query', 'pickle-divi'),
+			), 			
+			'custom_meta_query' => array(
+				'label'           => esc_html__( 'Custom Meta Query', 'pickle-divi' ),
+				'type'            => 'textarea',
+				'option_category' => 'configuration',
+				'description'     => esc_html__( 'Here you can add a custom meta query in array format.', 'pickle-divi' ),
+				'depends_show_if'  => 'on',
+				'toggle_slug'     => 'elements',
+			),														
 			'admin_label' => array(
 				'label'       => esc_html__( 'Admin Label', 'pickle-divi' ),
 				'type'        => 'text',

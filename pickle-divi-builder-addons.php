@@ -60,6 +60,7 @@ final class PickleDivi {
 		add_action('et_builder_ready', array($this, 'load_modules'));
 		add_action('init', array($this, 'init'), 0);
 		add_action('wp_enqueue_scripts', array($this, 'frontend_scripts_styles'));
+		add_action('admin_enqueue_scripts', array($this, 'admin_scripts_styles'));
 	}
 
 	public function init() {
@@ -68,6 +69,10 @@ final class PickleDivi {
 
 	public function frontend_scripts_styles() {
 		wp_enqueue_style('pickle-divi-modules-layout', PICKLE_DIVI_URL.'css/modules-layout.css', '', PICKLE_DIVI_VERSION);
+	}
+	
+	public function admin_scripts_styles() {
+		
 	}
 
 	public function load_modules() {

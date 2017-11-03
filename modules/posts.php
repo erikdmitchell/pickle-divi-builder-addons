@@ -23,8 +23,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'order',
 			'order_by',
 			'meta_key',
-			'show_custom_meta_query',
-			'custom_meta_query',			
+			'show_custom_meta_query',	
 			'admin_label',
 			'module_id',
 			'module_class',
@@ -93,10 +92,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			),
 			'taxonomy_type' => array(
 				'label'            => esc_html__('Taxonomy Type', 'pickle-divi'),
-				//'type' => 'hidden',
 				'type' => 'select',
-				//'renderer'         => 'pickle_divi_builder_get_taxonomies',
-				//'renderer_with_field' => true,
 				'options' => pickle_divi_builder_get_taxonomies(),
 				'depends_show_if'  => 'on',
 				'description'      => esc_html__( 'Select the taxonomy type that you would like to include.', 'pickle-divi' ),
@@ -276,14 +272,6 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 				),				
 				'toggle_slug'       => 'elements',
 				'description'       => esc_html__('Here you can choose whether or not to add a custom meta query', 'pickle-divi'),
-			), 			
-			'custom_meta_query' => array(
-				'label'           => esc_html__( 'Custom Meta Query', 'pickle-divi' ),
-				'type'            => 'textarea',
-				'option_category' => 'configuration',
-				'description'     => esc_html__( 'Here you can add a custom meta query in array format.', 'pickle-divi' ),
-				'depends_show_if'  => 'on',
-				'toggle_slug'     => 'elements',
 			),														
 			'admin_label' => array(
 				'label'       => esc_html__( 'Admin Label', 'pickle-divi' ),
@@ -318,15 +306,19 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			'post_type' => 'post',
 			'fields' => 'ids',
 		);
+		$args=wp_parse_args($args, $defaults);
+		$args=apply_filters('pickle_divi_posts_module_get_post_ids_args_'.$this->slug, $args, $this->shortcode_atts);
 
-		$args = wp_parse_args($args, $defaults);
-/*
 echo '<pre>';
 print_r($args);
 echo '</pre>';
-*/
+
+
+
+
+
 		$post_ids=get_posts($args);
-		
+
 		return $post_ids;		
 	}
 
@@ -351,7 +343,8 @@ echo '</pre>';
 		$order = $this->shortcode_atts['order'];
 		$order_by = $this->shortcode_atts['order_by'];
 		$meta_key = $this->shortcode_atts['meta_key'];
-				
+		$show_custom_meta_query = $this->shortcode_atts['show_custom_meta_query'];
+					
 		$module_class = ET_Builder_Element::add_module_order_class($module_class, $function_name);
 		
 		$post_id_args=array(
@@ -370,6 +363,10 @@ echo '</pre>';
 					'terms' => $taxonomy_name
 				)
 			);			
+		endif;
+		
+		if ($show_custom_meta_query==='on') :
+			$post_id_args=apply_filters('pickle_divi_posts_module_custom_meta_query_'.$this->slug, $post_id_args, $this->shortcode_atts);
 		endif;
 
 		$post_ids=$this->get_post_ids($post_id_args);

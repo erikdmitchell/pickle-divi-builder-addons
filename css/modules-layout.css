@@ -5,25 +5,30 @@
 
 .et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner {}
 					
-.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .recent-posts-list {}
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list {}
 
 
-.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .recent-posts-list .recent-post-single {
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list .post-single {
 	overflow: hidden;
 	margin-bottom: 15px;
 }
 					
-.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .recent-posts-list .recent-post-single .thumbnail {
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list .post-single .thumbnail {
+}
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list .post-single .thumbnail img {
 	float: left;
 	width: 33.333333333%;
-	margin-right: 15px;
-	max-height: 150px;
+	margin-right: 2%;
 }
-.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .recent-posts-list .recent-post-single .thumbnail img {}
 
-.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .recent-posts-list .recent-post-single .title {}
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list .post-single .post-content {
+}
 
-.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .recent-posts-list .recent-post-single .excerpt {}
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list .post-single .title {
+	display: inline-block;
+}
 
-.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .recent-posts-list .recent-post-single .excerpt a {}
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list .post-single .excerpt {}
+
+.et_divi_builder #et_builder_outer_content .et_pb_section .et_pb_posts .et_pb_posts_inner .posts-list .post-single .excerpt a {}
 

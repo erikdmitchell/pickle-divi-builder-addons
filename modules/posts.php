@@ -368,7 +368,7 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 			if (!empty($section_title))
 				$content.='<h3 class="posts-section-title">'.$section_title.'</h3>';
 		
-			$content.='<ul class="recent-posts-list">';
+			$content.='<ul class="posts-list">';
 			
 				foreach ($post_ids as $post_id) :
 					if ($show_more_link==='on') :
@@ -385,18 +385,22 @@ class Pickle_Divi_Builder_Module_Posts extends ET_Builder_Module {
 						$thumbnail='';
 					endif;
 				
-					$content.='<li id="post-'.$post_id.'" class="recent-post-single">';
+					$content.='<li id="post-'.$post_id.'" class="post-single">';
 						
 						if ($show_thumbnail==='on')
 							$content.='<div class="thumbnail">'.$thumbnail.'</div>';
-							
-						$content.='<h3 class="title"><a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a></h3>';
 						
-						if ($show_date==='on')
-							$content.='<div class="date">'.apply_filters('pickle_divi_posts_module_date', get_the_date($date_format, $post_id), $post_id, $date_format).'</div>';						
+						$content.='<div class="post-content">';	
 						
-						if ($show_excerpt==='on' && $excerpt)
-							$content.='<div class="excerpt">'.$excerpt.'</div>';
+							$content.='<h3 class="title"><a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a></h3>';
+						
+							if ($show_date==='on')
+								$content.='<div class="date">'.apply_filters('pickle_divi_posts_module_date', get_the_date($date_format, $post_id), $post_id, $date_format).'</div>';						
+						
+							if ($show_excerpt==='on' && $excerpt)
+								$content.='<div class="excerpt">'.$excerpt.'</div>';
+								
+						$content.='</div>';
 							
 					$content.='</li>';
 					
